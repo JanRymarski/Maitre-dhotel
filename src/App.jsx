@@ -1,5 +1,5 @@
-import Card from './Card.jsx'
-import List from './List.jsx'
+import Card from './components/Card.jsx'
+
 function App() {
   return(
     <>

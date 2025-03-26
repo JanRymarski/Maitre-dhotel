@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TableTimer from './TableTimer';
 
 function List() {
     const initialGerechten = [
@@ -17,6 +18,12 @@ function List() {
         ));
     };
 
+    const subtractCount = (id) => {
+        setGerechten(gerechten.map(gerecht => 
+            gerecht.id === id && gerecht.count > 0 ? { ...gerecht, count: gerecht.count - 1 } : gerecht
+        ));
+    };
+
     const totaalPrijs = gerechten.reduce((sum, gerecht) => sum + (gerecht.prijs * gerecht.count), 0);
 
 
@@ -24,6 +31,7 @@ function List() {
         <li key={gerecht.id}>
             {gerecht.name} : {gerecht.prijs}€ 
             <button onClick={() => addCount(gerecht.id)}>+</button>
+            <button onClick={() => subtractCount(gerecht.id)}>-</button>
             <span> Aantal: {gerecht.count} </span>
         </li>
     ));
@@ -32,9 +40,12 @@ function List() {
         <> 
             <ul>{listItems}</ul>
             <h3>Totaalprijs: {totaalPrijs}€</h3>
-
+            <TableTimer />
         </>
     );
 }
 
+List.defaultProps = {
+    count: 0,
+};
 export default List;

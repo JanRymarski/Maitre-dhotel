@@ -24,3 +24,10 @@
 .vrij{
   background-color: rgb(131, 255, 127);
 }
+ul{
+  list-style-type: none;
+  padding: 20px;
+}
+li{
+  margin-top: 10px;
+}
