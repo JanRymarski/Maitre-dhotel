@@ -1,4 +1,5 @@
 import Card from './components/Card.jsx'
+import DragDrop from './components/DragDrop.jsx';
 
 function App() {
   return(
@@ -7,6 +8,7 @@ function App() {
       <Card number={2} />
       <Card number={3} />
       <Card number={4} />
+      <DragDrop />
     </>
     
   );
