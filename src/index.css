@@ -31,3 +31,8 @@ ul{
 li{
   margin-top: 10px;
 }
+.CardList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
