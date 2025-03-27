@@ -1,37 +1,47 @@
-import React, {useState} from 'react';
-import {DndContext} from '@dnd-kit/core';
+import React, { useState } from 'react';
+import { DndContext } from '@dnd-kit/core';
 
-import Droppable from './Droppable';
-import Draggable from './Draggable';
+import DroppableCircle from './DroppableCircle.jsx';
+import DraggableImage from './DraggableImage.jsx';
+
+const images = [
+  { id: 'img1', src: '../public/one.jpeg' },
+  { id: 'img2', src: '../public/two.jpeg' },
+  { id: 'img3', src: '../public/three.jpeg' },
+  { id: 'img4', src: '../public/four.jpeg'},
+  { id: 'img5', src: '../public/five.jpeg' },
+];
+
+const circles = ['circle1', 'circle2', 'circle3', 'circle4', 'circle5'];
 
 function DragDrop() {
-    const containers = ['A', 'B', 'C'];
-    const [parent, setParent] = useState(null);
-    const draggableMarkup = (
-      <Draggable id="draggable">Drag me</Draggable>
-    );
+  const [assignments, setAssignments] = useState({}); // Stores which image is in which circle
 
-   return (
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    if (over) {
+      setAssignments((prev) => ({
+        ...prev,
+        [over.id]: active.id,
+      }));
+    }
+  }
+
+  return (
     <DndContext onDragEnd={handleDragEnd}>
-      {parent === null ? draggableMarkup : null}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+        {images.map((img) => (
+          <DraggableImage key={img.id} id={img.id} src={img.src} />
+        ))}
+      </div>
 
-      {containers.map((id) => (
-        // We updated the Droppable component so it would accept an `id`
-        // prop and pass it to `useDroppable`
-        <Droppable key={id} id={id}>
-          {parent === id ? draggableMarkup : 'Drop here'}
-        </Droppable>
-      ))}
+      <div style={{ display: 'flex', gap: '20px' }}>
+        {circles.map((id) => (
+          <DroppableCircle key={id} id={id} assignedImage={assignments[id]} images={images} />
+        ))}
+      </div>
     </DndContext>
   );
-  
-  function handleDragEnd(event) {
-    const {over} = event;
-
-    // If the item is dropped over a container, set it as the parent
-    // otherwise reset the parent to `null`
-    setParent(over ? over.id : null);
-  }
-};
+}
 
 export default DragDrop;
