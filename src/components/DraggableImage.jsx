@@ -2,10 +2,8 @@ import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
 function DraggableImage({ id, src }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id,
-  });
-
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
+  
   const style = {
     width: '80px',
     height: '80px',

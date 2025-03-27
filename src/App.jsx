@@ -12,11 +12,13 @@ const images = [
 ];
 
 function App() {
-  const [assignments, setAssignments] = useState({});
+  const [assignments, setAssignments] = useState({}); 
+  const [reservations, setReservations] = useState({}); 
 
   function handleDragEnd(event) {
     const { active, over } = event;
-    if (over) {
+
+    if (over && over.id.startsWith('table-')) {
       setAssignments((prev) => ({
         ...prev,
         [over.id]: images.find((img) => img.id === active.id)?.src,
@@ -24,34 +26,49 @@ function App() {
     }
   }
 
+  function clearAssignment(tableId) {
+    setAssignments((prev) => {
+      const updated = { ...prev };
+      delete updated[tableId];
+      return updated;
+    });
+  }
+
+  function addReservation(tableId, name, time) {
+    setReservations((prev) => ({
+      ...prev,
+      [tableId]: { name, time },
+    }));
+  }
+
+  function removeReservation(tableId) {
+    setReservations((prev) => {
+      const updated = { ...prev };
+      delete updated[tableId];
+      return updated;
+    });
+  }
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        {images
-          .filter((img) => !Object.values(assignments).includes(img.src))
-          .map((img) => (
-            <DraggableImage key={img.id} id={img.id} src={img.src} />
-          ))}
+        {images.map((img) => (
+          <DraggableImage key={img.id} id={img.id} src={img.src} />
+        ))}
       </div>
 
-     
-      <div className='CardList'>
-        <Card
-          number={1}
-          assignedImage={assignments['table-1']}
-        />
-        <Card
-          number={2}
-          assignedImage={assignments['table-2']}
-        />
-        <Card
-          number={3}
-          assignedImage={assignments['table-3']}
-        />
-        <Card
-          number={4}
-          assignedImage={assignments['table-4']}
-        />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        {[1, 2, 3, 4].map((tableNumber) => (
+          <Card
+            key={tableNumber}
+            number={tableNumber}
+            assignedImage={assignments[`table-${tableNumber}`] || null}
+            clearAssignment={clearAssignment}
+            reservation={reservations[`table-${tableNumber}`]}
+            addReservation={addReservation}
+            removeReservation={removeReservation}
+          />
+        ))}
       </div>
     </DndContext>
   );
