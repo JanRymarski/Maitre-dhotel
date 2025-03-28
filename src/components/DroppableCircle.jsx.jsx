@@ -22,7 +22,7 @@ function DroppableCircle({ id, assignedImage }) {
       {assignedImage ? (
         <img src={assignedImage} alt="Dropped" style={{ width: "80px", height: "80px" }} />
       ) : (
-        "Drop here"
+        "Kelner foto"
       )}
     </div>
   );

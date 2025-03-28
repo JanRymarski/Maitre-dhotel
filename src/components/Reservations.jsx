@@ -10,22 +10,25 @@ function Reservations() {
     e.preventDefault();
     if (name && time && table) {
       const newReservation = {
-        id: Date.now(), 
+        id: Date.now(),
         name,
         time,
         table,
       };
       setReservations((prev) => [...prev, newReservation]);
-      // Clear form fields
       setName('');
       setTime('');
       setTable('');
     }
   };
 
+  const handleCancel = (id) => {
+    setReservations((prev) => prev.filter((reservation) => reservation.id !== id));
+  };
+
   return (
-    <div style={{ margin: '20px', padding: '10px', border: '1px solid #ccc' }}>
-      <h2>Reservations</h2>
+    <div className="reservaties-lijst">
+      <h2>Reserveringen</h2>
       <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
         <input
           type="text"
@@ -48,36 +51,34 @@ function Reservations() {
           required
           style={{ marginRight: '10px' }}
         >
-          <option value="">Select Table</option>
-          <option value="1">Table 1</option>
-          <option value="2">Table 2</option>
-          <option value="3">Table 3</option>
-          <option value="4">Table 4</option>
+          <option value="">Kies een Tafel</option>
+          <option value="1">Tafel 1</option>
+          <option value="2">Tafel 2</option>
+          <option value="3">Tafel 3</option>
+          <option value="4">Tafel 4</option>
+          <option value="5">Tafel 5</option>
+          <option value="6">Tafel 6</option>
         </select>
-        <button type="submit">Add Reservation</button>
+        <button type="submit" className="reservation-button">Add Reservation</button>
       </form>
 
       <div>
-        <h3>Reservation List ({reservations.length})</h3>
+        <h3>Reservaties Lijst ({reservations.length})</h3>
         {reservations.length === 0 && <p>No reservations yet.</p>}
         {reservations.map((r) => (
-          <div
-            key={r.id}
-            style={{
-              border: '1px solid #ddd',
-              padding: '8px',
-              marginBottom: '8px',
-            }}
-          >
+          <div className="reservation--list-item" key={r.id}>
             <p>
-              <strong>Name:</strong> {r.name}
+              <strong>Naam:</strong> {r.name}
             </p>
             <p>
-              <strong>Time:</strong> {r.time}
+              <strong>Tijd:</strong> {r.time}
             </p>
             <p>
-              <strong>Table:</strong> {r.table}
+              <strong>Tafel:</strong> {r.table}
             </p>
+            <button onClick={() => handleCancel(r.id)} style={{ marginTop: '5px', backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer' }}>
+              Cancel
+            </button>
           </div>
         ))}
       </div>

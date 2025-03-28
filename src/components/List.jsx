@@ -3,11 +3,11 @@ import TableTimer from './TableTimer';
 
 function List({ onOrderChange }) {
   const initialGerechten = [
-    { id: 1, name: "Gerecht1", prijs: 10, count: 0 },
-    { id: 2, name: "Gerecht2", prijs: 15, count: 0 },
-    { id: 3, name: "Gerecht3", prijs: 20, count: 0 },
-    { id: 4, name: "Gerecht4", prijs: 25, count: 0 },
-    { id: 5, name: "Gerecht5", prijs: 30, count: 0 }
+    { id: 1, name: "Burger", prijs: 10, count: 0 },
+    { id: 2, name: "Pizza", prijs: 15, count: 0 },
+    { id: 3, name: "Pita", prijs: 20, count: 0 },
+    { id: 4, name: "Spaghetti", prijs: 25, count: 0 },
+    { id: 5, name: "Steak", prijs: 30, count: 0 }
   ];
 
   const [gerechten, setGerechten] = useState(initialGerechten);
@@ -31,6 +31,8 @@ function List({ onOrderChange }) {
     const newOrders = gerechten
       .filter(g => g.count > 0)
       .map(g => ({ name: g.name, count: g.count }));
+    
+
     if (JSON.stringify(prevOrdersRef.current) !== JSON.stringify(newOrders)) {
       prevOrdersRef.current = newOrders;
       if (onOrderChange) {
@@ -42,8 +44,9 @@ function List({ onOrderChange }) {
   const listItems = gerechten.map(gerecht => (
     <li key={gerecht.id}>
       {gerecht.name} : {gerecht.prijs}€ 
-      <button onClick={() => addCount(gerecht.id)}>+</button>
-      <button onClick={() => subtractCount(gerecht.id)}>-</button>
+        <button className="counter-button" onClick={() => addCount(gerecht.id)}>+</button>
+        <button className="counter-button minus" onClick={() => subtractCount(gerecht.id)}>-</button>
+
       <span> Aantal: {gerecht.count} </span>
     </li>
   ));

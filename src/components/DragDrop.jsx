@@ -46,7 +46,9 @@ function DragDrop() {
             />
           ))}
         </div>
+        
       </DndContext>
+      
     );
   }
   

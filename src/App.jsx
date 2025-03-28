@@ -44,25 +44,35 @@ function App() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        {images.map((img) => (
-          <DraggableImage key={img.id} id={img.id} src={img.src} />
-        ))}
-      </div>
+       <h2>Staff on duty</h2> 
+      <div className="container">
+        <div className="draggable-images">
+          {images.map((img) => (
+            <DraggableImage key={img.id} id={img.id} src={img.src} />
+          ))}
+        </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-        {[1, 2, 3, 4].map((tableNumber) => (
-          <Card
-            key={tableNumber}
-            number={tableNumber}
-            assignedImage={assignments[`table-${tableNumber}`] || null}
-            clearAssignment={clearAssignment}
-            updateOrder={(orderData) => updateOrder(`table-${tableNumber}`, orderData)}
-          />
-        ))}
+        <div className="cards">
+          {[1, 2, 3, 4, 5, 6].map((tableNumber) => (
+            <Card
+              key={tableNumber}
+              number={tableNumber}
+              assignedImage={assignments[`table-${tableNumber}`] || null}
+              clearAssignment={clearAssignment}
+              updateOrder={(orderData) => updateOrder(`table-${tableNumber}`, orderData)}
+            />
+          ))}
+        </div>
+
+        <div className="bottom-section">
+          <div className="reservations">
+            <Reservations />
+          </div>
+          <div className="kitchen">
+            <Kitchen orders={kitchenOrders} />
+          </div>
+        </div>
       </div>
-        <Reservations />
-      <Kitchen orders={kitchenOrders} />
     </DndContext>
   );
 }

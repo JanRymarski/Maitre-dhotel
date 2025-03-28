@@ -8,6 +8,7 @@ function Card({ number, isBezet: defaultBezet = false, assignedImage, clearAssig
   const toggleBezet = () => {
     if (isBezet) {
       clearAssignment(`table-${number}`);
+
       updateOrder([]);
     }
     setIsBezet(!isBezet);
@@ -16,7 +17,6 @@ function Card({ number, isBezet: defaultBezet = false, assignedImage, clearAssig
   return (
     <div className="card">
       <h2 className="card-title">Tafel {number}</h2>
-      <p className="card-text">Hier moet een menu komen</p>
       <p
         className={`card-text ${isBezet ? "bezet" : "vrij"}`}
         onClick={toggleBezet}

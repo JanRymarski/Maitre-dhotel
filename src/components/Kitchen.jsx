@@ -5,8 +5,8 @@ function Kitchen({ orders, onDishComplete }) {
   const tableEntries = Object.entries(orders);
 
   return (
-    <div style={{ marginTop: '20px', padding: '10px', border: '2px solid #333' }}>
-      <h2>Kitchen Orders</h2>
+    <div className='kitchenList'>
+      <h2>Keuken wachtrij</h2>
       {tableEntries.length === 0 && <p>No orders yet.</p>}
       {tableEntries.map(([tableId, orderData]) => (
         <div key={tableId} style={{ marginBottom: '15px' }}>
