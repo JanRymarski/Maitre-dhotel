@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DndContext } from '@dnd-kit/core';
 import Card from './components/Card.jsx';
 import DraggableImage from './components/DraggableImage.jsx';
+import Reservations from './components/Reservations.jsx';
 
 const images = [
   { id: 'img1', src: '/one.jpeg' },
@@ -13,7 +14,6 @@ const images = [
 
 function App() {
   const [assignments, setAssignments] = useState({}); 
-  const [reservations, setReservations] = useState({}); 
 
   function handleDragEnd(event) {
     const { active, over } = event;
@@ -34,20 +34,6 @@ function App() {
     });
   }
 
-  function addReservation(tableId, name, time) {
-    setReservations((prev) => ({
-      ...prev,
-      [tableId]: { name, time },
-    }));
-  }
-
-  function removeReservation(tableId) {
-    setReservations((prev) => {
-      const updated = { ...prev };
-      delete updated[tableId];
-      return updated;
-    });
-  }
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
@@ -64,12 +50,10 @@ function App() {
             number={tableNumber}
             assignedImage={assignments[`table-${tableNumber}`] || null}
             clearAssignment={clearAssignment}
-            reservation={reservations[`table-${tableNumber}`]}
-            addReservation={addReservation}
-            removeReservation={removeReservation}
           />
         ))}
       </div>
+      <Reservations />
     </DndContext>
   );
 }
