@@ -2,13 +2,17 @@ import { useState } from "react";
 import List from "./List.jsx";
 import DroppableCircle from "./DroppableCircle.jsx";
 
-
-function Card({ number, isBezet: defaultBezet, assignedImage }) {
+function Card({ number, isBezet: defaultBezet = false, assignedImage, clearAssignment, updateOrder }) {
   const [isBezet, setIsBezet] = useState(defaultBezet);
-  
+
   const toggleBezet = () => {
+    if (isBezet) {
+      clearAssignment(`table-${number}`);
+      updateOrder([]);
+    }
     setIsBezet(!isBezet);
   };
+
   return (
     <div className="card">
       <h2 className="card-title">Tafel {number}</h2>
@@ -23,7 +27,7 @@ function Card({ number, isBezet: defaultBezet, assignedImage }) {
 
       {isBezet && (
         <>
-          <List />
+          <List onOrderChange={updateOrder} />
           <DroppableCircle id={`table-${number}`} assignedImage={assignedImage} />
         </>
       )}

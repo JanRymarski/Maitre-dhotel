@@ -3,6 +3,7 @@ import { DndContext } from '@dnd-kit/core';
 import Card from './components/Card.jsx';
 import DraggableImage from './components/DraggableImage.jsx';
 import Reservations from './components/Reservations.jsx';
+import Kitchen from './components/Kitchen.jsx';
 
 const images = [
   { id: 'img1', src: '/one.jpeg' },
@@ -13,11 +14,11 @@ const images = [
 ];
 
 function App() {
-  const [assignments, setAssignments] = useState({}); 
+  const [assignments, setAssignments] = useState({});
+  const [kitchenOrders, setKitchenOrders] = useState({}); 
 
   function handleDragEnd(event) {
     const { active, over } = event;
-
     if (over && over.id.startsWith('table-')) {
       setAssignments((prev) => ({
         ...prev,
@@ -34,6 +35,12 @@ function App() {
     });
   }
 
+  function updateOrder(tableId, orderData) {
+    setKitchenOrders((prev) => ({
+      ...prev,
+      [tableId]: orderData,
+    }));
+  }
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
@@ -50,10 +57,12 @@ function App() {
             number={tableNumber}
             assignedImage={assignments[`table-${tableNumber}`] || null}
             clearAssignment={clearAssignment}
+            updateOrder={(orderData) => updateOrder(`table-${tableNumber}`, orderData)}
           />
         ))}
       </div>
-      <Reservations />
+        <Reservations />
+      <Kitchen orders={kitchenOrders} />
     </DndContext>
   );
 }
