@@ -6,11 +6,11 @@ import Reservations from './components/Reservations.jsx';
 import Kitchen from './components/Kitchen.jsx';
 
 const images = [
-  { id: 'img1', src: '/one.jpeg' },
-  { id: 'img2', src: '/two.jpeg' },
-  { id: 'img3', src: '/three.jpeg' },
-  { id: 'img4', src: '/four.jpeg' },
-  { id: 'img5', src: '/five.jpeg' },
+  { id: 'img1', src: 'one.jpeg' },
+  { id: 'img2', src: 'two.jpeg' },
+  { id: 'img3', src: 'three.jpeg' },
+  { id: 'img4', src: 'four.jpeg' },
+  { id: 'img5', src: 'five.jpeg' },
 ];
 
 function App() {
